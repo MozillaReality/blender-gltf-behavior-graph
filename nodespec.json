@@ -2537,6 +2537,29 @@
     "configuration": []
   },
   {
+    "type": "hubs/misc/changehub",
+    "category": "Misc",
+    "label": "Change Hub",
+    "inputs": [
+      {
+        "name": "flow",
+        "valueType": "flow"
+      },
+      {
+        "name": "url",
+        "valueType": "string",
+        "defaultValue": ""
+      }
+    ],
+    "outputs": [
+      {
+        "name": "flow",
+        "valueType": "flow"
+      }
+    ],
+    "configuration": []
+  },
+  {
     "type": "hubs/entity/localToWorld/vec3",
     "category": "Vec3 Math",
     "label": "Local to World",
