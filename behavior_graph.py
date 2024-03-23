@@ -1,5 +1,6 @@
 from .sockets import *
 from .nodes import *
+from . import node_groups
 import json
 import bpy
 import os
@@ -756,8 +757,11 @@ def register():
 
     register_node_categories("BEHAVIOR_GRAPH_NODES", categories)
 
+    node_groups.register()
+
 
 def unregister():
+    node_groups.unregister()
     unregister_node_categories("BEHAVIOR_GRAPH_NODES")
 
     for cls in reversed(extra_classes):
