@@ -133,30 +133,28 @@ def gather_object_property(export_settings, blender_object):
         return None
 
 
-def get_hubs_ext(export_settings):
-    exts = export_settings["gltf_user_extensions"]
-    import io_hubs_addon
-    for ext in exts:
-        if type(ext) is io_hubs_addon.io.gltf_exporter.glTF2ExportUserExtension:
-            return ext
-
-
 def add_component_to_node(gltf2_object, dep, value, export_settings):
     try:
         from io_hubs_addon.io.utils import HUBS_CONFIG
     except ImportError:
         # A version of the io_hubs_addon below 1.5 is being used
         from io_hubs_addon.io.gltf_exporter import hubs_config as HUBS_CONFIG
-    hubs_ext = get_hubs_ext(export_settings)
+
     hubs_ext_name = HUBS_CONFIG["gltfExtensionName"]
     if type(gltf2_object) is tuple:
         extensions = gltf2_object[0].extensions
     else:
         extensions = gltf2_object.extensions
+
     if extensions is None:
         extensions = {}
+
     if hubs_ext_name not in extensions:
         extensions[hubs_ext_name] = {dep.get_name(): value}
+        if type(gltf2_object) is tuple:
+            gltf2_object[0].extensions = extensions
+        else:
+            gltf2_object.extensions = extensions
     else:
         if hasattr(extensions[hubs_ext_name], "extension"):
             if not dep.get_name() in extensions[hubs_ext_name].extension:
